@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>URL Processing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #ffcccc, #ff99cc, #ff66cc, #ff33cc, #ff00cc, #cc00ff, #9900ff, #6600ff, #3300ff, #0000ff);
+        }
+
+        .container {
+            margin: 0 auto;
+            padding: 40px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .input-group {
+            margin-bottom: 40px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+            font-size: 24px;
+        }
+
+        .input-group input[type="text"],
+        .input-group select {
+            width: 100%;
+            padding: 12px;
+            font-size: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .input-group select {
+            appearance: none;
+            -webkit-appearance: none;
+            background: url('down-arrow.png') no-repeat right center;
+            background-size: 18px;
+            padding-right: 30px;
+            cursor: pointer;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .button-container button {
+            padding: 16px 32px;
+            font-size: 24px;
+            cursor: pointer;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-container button:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            margin-top: 30px;
+            font-weight: bold;
+            background-color: #f9f9f9;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 20px;
+        }
+
+        .copy-button {
+            display: block;
+            margin-top: 10px;
+            padding: 16px 32px;
+            font-size: 24px;
+            cursor: pointer;
+            background-color: #337ab7;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .copy-button:hover {
+            background-color: #286090;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+
+            .button-container button {
+                padding: 12px 24px;
+                font-size: 20px;
+            }
+
+            .result,
+            .copy-button {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>URL Processing</h1>
+
+        <div class="input-group">
+            <label for="text-input">Text:</label>
+            <input type="text" id="text-input" placeholder="Enter the text">
+        </div>
+
+        <div class="input-group">
+            <label for="quality-select">Quality:</label>
+            <select id="quality-select">
+                <option value="240">240p</option>
+                <option value="360">360p</option>
+                <option value="480">480p</option>
+                <option value="720">720p</option>
+            </select>
+        </div>
+
+        <div class="button-container">
+            <button onclick="processText()">Process</button>
+        </div>
+
+        <div class="result" id="result"></div>
+
+        <button onclick="copyToClipboard()" id="copy-button" class="copy-button" disabled>Copy URL</button>
+    </div>
+
+    <script>
+        function processText() {
+            var text = document.getElementById("text-input").value;
+            var quality = document.getElementById("quality-select").value;
+
+            var start_index = text.indexOf("https://d1d34p8vz63oiq.cloudfront.net");
+            var end_index = text.indexOf("/dash/");
+            var url = text.substring(start_index, end_index);
+
+            var final_url = url.replace("d1d34p8vz63oiq", "d26g5bnklkwsh4");
+            final_url = final_url.split("/dash")[0] + "/hls/" + quality + "/main.m3u8";
+
+            document.getElementById("result").textContent = final_url;
+            document.getElementById("copy-button").disabled = false;
+        }
+
+        function copyToClipboard() {
+            var copyText = document.getElementById("result");
+            var range = document.createRange();
+            range.selectNode(copyText);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand("copy");
+            window.getSelection().removeAllRanges();
+            alert("URL copied to clipboard!");
+        }
+    </script>
+</body>
+</html>
