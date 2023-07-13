@@ -7,28 +7,25 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to bottom, #ffcccc, #ff99cc, #ff66cc, #ff33cc, #ff00cc, #cc00ff, #9900ff, #6600ff, #3300ff, #0000ff);
+            background-color: #f9f9f9;
         }
 
         .container {
+            max-width: 400px;
             margin: 0 auto;
             padding: 40px;
             background-color: #fff;
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            text-align: center;
         }
 
         h1 {
-            text-align: center;
             margin-top: 0;
         }
 
         .input-group {
-            margin-bottom: 40px;
+            margin-bottom: 20px;
         }
 
         .input-group label {
@@ -36,35 +33,24 @@
             margin-bottom: 5px;
             font-weight: bold;
             color: #333;
-            font-size: 24px;
+            font-size: 18px;
         }
 
-        .input-group input[type="text"],
-        .input-group select {
+        .input-group input[type="text"] {
             width: 100%;
-            padding: 12px;
-            font-size: 20px;
+            padding: 8px;
+            font-size: 16px;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
 
-        .input-group select {
-            appearance: none;
-            -webkit-appearance: none;
-            background: url('down-arrow.png') no-repeat right center;
-            background-size: 18px;
-            padding-right: 30px;
-            cursor: pointer;
-        }
-
         .button-container {
-            text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
         }
 
         .button-container button {
-            padding: 16px 32px;
-            font-size: 24px;
+            padding: 10px 20px;
+            font-size: 16px;
             cursor: pointer;
             background-color: #4caf50;
             color: white;
@@ -78,19 +64,19 @@
         }
 
         .result {
-            margin-top: 30px;
+            margin-top: 20px;
             font-weight: bold;
             background-color: #f9f9f9;
-            padding: 12px;
+            padding: 8px;
             border-radius: 4px;
-            font-size: 20px;
+            font-size: 16px;
         }
 
         .copy-button {
             display: block;
             margin-top: 10px;
-            padding: 16px 32px;
-            font-size: 24px;
+            padding: 10px 20px;
+            font-size: 16px;
             cursor: pointer;
             background-color: #337ab7;
             color: white;
@@ -109,13 +95,13 @@
             }
 
             .button-container button {
-                padding: 12px 24px;
-                font-size: 20px;
+                padding: 8px 16px;
+                font-size: 14px;
             }
 
             .result,
             .copy-button {
-                font-size: 20px;
+                font-size: 14px;
             }
         }
     </style>
@@ -126,7 +112,7 @@
 
         <div class="input-group">
             <label for="text-input">Text:</label>
-            <input type="text" id="text-input" placeholder="Enter the text">
+            <input type="text" id="text-input" placeholder="Enter or paste the text">
         </div>
 
         <div class="input-group">
@@ -141,6 +127,7 @@
 
         <div class="button-container">
             <button onclick="processText()">Process</button>
+            <button onclick="pasteFromClipboard()">Paste from Clipboard</button>
         </div>
 
         <div class="result" id="result"></div>
@@ -173,6 +160,12 @@
             document.execCommand("copy");
             window.getSelection().removeAllRanges();
             alert("URL copied to clipboard!");
+        }
+
+        function pasteFromClipboard() {
+            navigator.clipboard.readText().then(function (text) {
+                document.getElementById("text-input").value = text;
+            });
         }
     </script>
 </body>
